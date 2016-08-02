@@ -13,9 +13,10 @@
         android:layout_height="match_parent" />
 
     <Button
-        android:text="Mark The Spot"
+        android:text="@string/app_name"
         android:id="@+id/activity_maps_mark_spot_button"
         android:padding="24dp"
+        android:elevation="12dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         android:layout_width="match_parent"
