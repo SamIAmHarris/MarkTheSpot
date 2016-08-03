@@ -1,4 +1,4 @@
-package com.jackrabbitmobile.markthespot;
+package com.jackrabbitmobile.markthespot.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

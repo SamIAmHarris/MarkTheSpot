@@ -1,10 +1,11 @@
-package com.jackrabbitmobile.markthespot;
+package com.jackrabbitmobile.markthespot.view;
 
 import android.text.TextUtils;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.jackrabbitmobile.markthespot.model.MarkerPref;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * Created by SamMyxer on 8/3/16.
  */
 
-public class MapHelper {
+public class GoogleMapHelper {
 
     public static void addAllMarkersToMap(GoogleMap googleMap, ArrayList<MarkerPref> markerPrefs) {
         if(markerPrefs != null) {
@@ -27,7 +28,7 @@ public class MapHelper {
         }
     }
 
-    public static MarkerOptions getMarkerInCenterOfMap(GoogleMap googleMap) {
-        return new MarkerOptions().position(googleMap.getCameraPosition().target);
+    public static LatLng getCenterOfMap(GoogleMap googleMap) {
+        return googleMap.getCameraPosition().target;
     }
 }
