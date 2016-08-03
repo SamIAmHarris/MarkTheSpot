@@ -5,18 +5,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+/**
+ * onMapReady: Manipulates the map once available.
+ * This callback is triggered when the map is ready to be used.
+ * If Google Play services is not installed on the device, the user will be prompted to install
+ * it inside the SupportMapFragment. This method will only be triggered once the user has
+ * installed Google Play services and returned to the app.
+ */
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
-    Button markTheSpotButton;
+    private Button markTheSpotButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +36,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 if(googleMap != null) {
-                    LatLng centerLatLng = googleMap.getCameraPosition().target;
-                    googleMap.addMarker(new MarkerOptions().position(centerLatLng));
+                    saveNewMarker(MapHelper.getMarkerInCenterOfMap(googleMap));
+                    addAllMarkersToMap();
                 }
             }
         });
     }
 
+    private void addAllMarkersToMap() {
+        MapHelper.addAllMarkersToMap(googleMap, SharedPrefHelper.getMarkerList());
+    }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    private void saveNewMarker(MarkerOptions markerOptions) {
+        SharedPrefHelper.addMarkerToList(markerOptions);
+
+    }
+
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
-        // Add a marker in Sydney and move the camera
-        LatLng austin = new LatLng(30.2672, -97.7431);
-        googleMap.addMarker(new MarkerOptions().position(austin).title("Marker in Austin"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(austin, 12.0f));
+        addAllMarkersToMap();
     }
 }
